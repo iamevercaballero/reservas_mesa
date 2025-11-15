@@ -1,0 +1,41 @@
+<h2>Administración de Restaurantes</h2>
+
+<form (ngSubmit)="saveRestaurant()" #restaurantForm="ngForm">
+  <input type="hidden" [(ngModel)]="current.id" name="id">
+
+  <div>
+    <label>Nombre:</label>
+    <input
+      type="text"
+      name="nombre"
+      [(ngModel)]="current.nombre"
+      required>
+  </div>
+
+  <button type="submit">
+    {{ current.id ? 'Actualizar' : 'Agregar' }}
+  </button>
+  <button type="button" (click)="clear()">Limpiar</button>
+</form>
+
+<hr>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of restaurants">
+      <td>{{ r.id }}</td>
+      <td>{{ r.nombre }}</td>
+      <td>
+        <button (click)="edit(r)">Editar</button>
+        <button (click)="delete(r.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
