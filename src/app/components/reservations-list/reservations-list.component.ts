@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Restaurant } from '../../models/restaurant.model';
 import { Zone } from '../../models/zone.model';
 import { Reservation } from '../../models/reservation.model';
-//import { Table } from '../../models/table.model';
+import { Table } from '../../models/table.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RestaurantService } from '../../services/restaurant.service';
