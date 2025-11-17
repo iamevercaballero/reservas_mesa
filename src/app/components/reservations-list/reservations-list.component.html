@@ -3,26 +3,48 @@
     <h2>Listado de Reservas</h2>
   </div>
 
-  <div class="filters-row">
-    <div class="form-group">
-      <label>Restaurante</label>
-      <select [(ngModel)]="selectedRestaurantId" (change)="onRestaurantChange()">
-        <option [ngValue]="null">Todos</option>
-        <option *ngFor="let r of restaurants" [ngValue]="r.id">
-          {{ r.nombre }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Fecha</label>
-      <input type="date" [(ngModel)]="fechaFiltro" name="fechaFiltro" />
-    </div>
+<div class="filters-row">
+  <!-- Restaurante -->
+  <div class="form-group">
+    <label>Restaurante</label>
+    <select
+      [(ngModel)]="selectedRestaurantId"
+      (change)="onRestaurantChange()"
+    >
+      <option [ngValue]="null">Todos</option>
+      <option *ngFor="let r of restaurants" [ngValue]="r.id">
+        {{ r.nombre }}
+      </option>
+    </select>
   </div>
 
-  <div class="form-actions">
-    <button (click)="limpiarFiltros()">Limpiar filtros</button>
+  <!-- Zona -->
+  <div class="form-group">
+    <label>Zona</label>
+    <select
+      [(ngModel)]="selectedZoneId"
+      (change)="onZoneChange()"
+      [disabled]="!zones.length"
+    >
+      <option [ngValue]="null">Todas</option>
+      <option *ngFor="let z of zones" [ngValue]="z.id">
+        {{ z.nombre }}
+      </option>
+    </select>
   </div>
+
+  <!-- Fecha -->
+  <div class="form-group">
+    <label>Fecha</label>
+    <input type="date" [(ngModel)]="fechaFiltro" name="fechaFiltro" />
+  </div>
+</div>
+
+<div class="form-actions">
+  <button type="button" (click)="limpiarFiltros()">Limpiar filtros</button>
+</div>
+
+
 
   <div class="table-wrapper" *ngIf="reservations.length">
     <table>

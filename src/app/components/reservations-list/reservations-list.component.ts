@@ -24,7 +24,7 @@ export class ReservationsListComponent implements OnInit {
   zones: Zone[] = [];
   allZones: Zone[] = [];       // todas las zonas del sistema
   reservations: Reservation[] = [];
-
+  allReservations: Reservation[] = [];
   selectedRestaurantId: number | null = null;
   selectedZoneId: number | null = null;
   fechaFiltro: string = '';
@@ -39,9 +39,11 @@ export class ReservationsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.restaurants = this.restaurantService.getAll();
-    this.allZones = this.zoneService.getAll();
-    this.loadReservations();
+    this.allZones = this.zoneService.getAll();           // o como se llame tu método
+    this.allReservations = this.reservationService.getAll();
+    this.applyFilters();
   }
+
 
   onRestaurantChange() {
     if (this.selectedRestaurantId) {
@@ -67,6 +69,26 @@ export class ReservationsListComponent implements OnInit {
       this.selectedZoneId || undefined,
       this.fechaFiltro || undefined
     );
+  }
+    private applyFilters(): void {
+    let result = [...this.allReservations];
+
+    // filtrar por restaurante
+    if (this.selectedRestaurantId) {
+      result = result.filter(r => r.restauranteId === this.selectedRestaurantId);
+    }
+
+    // filtrar por zona
+    if (this.selectedZoneId) {
+      result = result.filter(r => r.zonaId === this.selectedZoneId);
+    }
+
+    // filtrar por fecha
+    if (this.fechaFiltro) {
+      result = result.filter(r => r.fecha === this.fechaFiltro);
+    }
+
+    this.reservations = result;
   }
 
   limpiarFiltros() {

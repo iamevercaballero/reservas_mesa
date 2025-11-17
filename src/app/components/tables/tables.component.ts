@@ -61,23 +61,46 @@ export class TablesComponent implements OnInit {
     this.clearTable();
   }
 
-  saveTable() {
-    if (!this.selectedZoneId) {
-      alert('Seleccione una zona');
-      return;
-    }
-    if (!this.current.numero.trim()) return;
+saveTable() {
+  if (!this.selectedRestaurantId || !this.selectedZoneId) {
+    alert('Seleccione restaurante y zona');
+    return;
+  }
 
-    this.current.zonaId = this.selectedZoneId;
+  if (!this.current.numero || !this.current.capacidad) {
+    alert('Complete número de mesa y capacidad');
+    return;
+  }
 
-    if (this.current.id) {
-      this.tableService.update(this.current);
+  // Armo la mesa con la zona seleccionada
+  const mesa = {
+    id: this.current.id ?? 0,
+    zonaId: this.selectedZoneId,
+    numero: this.current.numero,
+    capacidad: this.current.capacidad,
+  };
+
+  console.log('Guardando mesa', mesa);
+
+  if (this.current.id) {
+    // editar
+    this.tableService.update(mesa);
+  } else {
+    // alta
+    this.tableService.add(mesa);
+  }
+
+  // Recargo la lista de mesas de esa zona
+  this.loadTables();
+  this.clearTable();
+}
+
+  loadTables() {
+    if (this.selectedZoneId) {
+      this.tables = this.tableService.getByZone(this.selectedZoneId);
     } else {
-      this.tableService.add({ ...this.current, id: 0 });
+      this.tables = [];
     }
-
-    this.onZoneChange();
-    this.clearTable();
   }
 
   edit(t: Table) {
