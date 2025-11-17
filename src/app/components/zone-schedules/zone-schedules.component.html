@@ -1,1 +1,68 @@
-<p>zone-schedules works!</p>
+<div class="app-card">
+  <div class="app-card-header">
+    <h2>Horarios por Zona</h2>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Restaurante</label>
+      <select [(ngModel)]="selectedRestaurantId" (change)="onRestaurantChange()">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let r of restaurants" [ngValue]="r.id">
+          {{ r.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="zones.length">
+      <label>Zona</label>
+      <select [(ngModel)]="selectedZoneId" (change)="onZoneChange()">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let z of zones" [ngValue]="z.id">
+          {{ z.nombre }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="selectedZoneId">
+    <form (ngSubmit)="agregarHorario()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Agregar horario</label>
+          <input type="time" [(ngModel)]="nuevoHorario" name="nuevoHorario" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit">Agregar</button>
+        <button type="button" (click)="guardarHorarios()">Guardar horarios</button>
+      </div>
+    </form>
+
+    <div class="table-wrapper" *ngIf="horarios.length">
+      <table>
+        <thead>
+          <tr>
+            <th>Horario</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of horarios">
+            <td>{{ h }}</td>
+            <td>
+              <button class="danger" type="button" (click)="eliminarHorario(h)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="empty-state" *ngIf="!horarios.length">
+      No hay horarios cargados para esta zona.
+    </p>
+  </div>
+</div>

@@ -1,1 +1,57 @@
-<p>reservations-list works!</p>
+<div class="app-card">
+  <div class="app-card-header">
+    <h2>Listado de Reservas</h2>
+  </div>
+
+  <div class="filters-row">
+    <div class="form-group">
+      <label>Restaurante</label>
+      <select [(ngModel)]="selectedRestaurantId" (change)="onRestaurantChange()">
+        <option [ngValue]="null">Todos</option>
+        <option *ngFor="let r of restaurants" [ngValue]="r.id">
+          {{ r.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha</label>
+      <input type="date" [(ngModel)]="fechaFiltro" name="fechaFiltro" />
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button (click)="limpiarFiltros()">Limpiar filtros</button>
+  </div>
+
+  <div class="table-wrapper" *ngIf="reservations.length">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Restaurante</th>
+          <th>Zona</th>
+          <th>Mesa</th>
+          <th>Cliente</th>
+          <th>Personas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of reservations">
+          <td>{{ r.fecha }}</td>
+          <td>{{ r.hora }}</td>
+          <td>{{ getRestaurantName(r.restauranteId) }}</td>
+          <td>{{ getZoneName(r.zonaId) }}</td>
+          <td>{{ getTableLabel(r.mesaId) }}</td>
+          <td>{{ r.nombre }} {{ r.apellido }}</td>
+          <td>{{ r.cantidadPersonas }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="empty-state" *ngIf="!reservations.length">
+    No hay reservas para los filtros seleccionados.
+  </p>
+</div>

@@ -1,1 +1,76 @@
-<p>tables works!</p>
+<div class="app-card">
+  <div class="app-card-header">
+    <h2>Administración de Mesas</h2>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Restaurante</label>
+      <select [(ngModel)]="selectedRestaurantId" (change)="onRestaurantChange()">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let r of restaurants" [ngValue]="r.id">
+          {{ r.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="zones.length">
+      <label>Zona</label>
+      <select [(ngModel)]="selectedZoneId" (change)="onZoneChange()">
+        <option [ngValue]="null">-- Seleccione --</option>
+        <option *ngFor="let z of zones" [ngValue]="z.id">
+          {{ z.nombre }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <form *ngIf="selectedZoneId" (ngSubmit)="saveTable()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Número de Mesa</label>
+        <input type="number" [(ngModel)]="current.numero" name="numero" />
+      </div>
+
+      <div class="form-group">
+        <label>Capacidad</label>
+        <input type="number" [(ngModel)]="current.capacidad" name="capacidad" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">
+        {{ current.id ? "Actualizar" : "Agregar" }}
+      </button>
+      <button type="button" (click)="clearTable()">Limpiar</button>
+    </div>
+  </form>
+
+  <div class="table-wrapper" *ngIf="tables.length">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Número</th>
+          <th>Capacidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tables">
+          <td>{{ t.id }}</td>
+          <td>{{ t.numero }}</td>
+          <td>{{ t.capacidad }}</td>
+          <td>
+            <button (click)="edit(t)">Editar</button>
+            <button class="danger" (click)="delete(t.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="empty-state" *ngIf="selectedZoneId && !tables.length">
+    No hay mesas registradas.
+  </p>
+</div>
