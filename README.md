@@ -1,6 +1,45 @@
-# TpReservasRestaurante
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+# TP Reservas de Restaurante
+
+Aplicación frontend para la **gestión de reservas de mesas en restaurantes**, desarrollada como Trabajo Práctico de Frontend.
+
+Permite administrar:
+
+- Restaurantes  
+- Zonas por restaurante  
+- Mesas por zona  
+- Horarios por zona  
+- Registro de reservas (con asignación automática de mesa)  
+- Listado y filtros de reservas (restaurante, zona y fecha)
+
+El proyecto está desarrollado con **Angular 19** y almacena los datos en **LocalStorage**, por lo que no requiere backend para ejecutarse.
+
+##  Prerrequisitos
+Antes de ejecutar el proyecto, asegurate de tener instalado:
+
+1. **Node.js** (recomendado: versión 20.x LTS o superior)  
+    Descargar desde: https://nodejs.org
+
+2. **npm** (se instala junto con Node)  
+   - Ver versión instalada:
+     ```bash
+     npm -v
+     ```
+
+3. **Angular CLI** (versión 19.x)
+   - Instalar de forma global:
+     ```bash
+     npm install -g @angular/cli@19
+     ```
+   - Verificar instalación:
+     ```bash
+     ng version
+     ```
+4. **Levantar el servidor de desarrollo:**
+    ```bash
+     ng ng serve -o
+     ```
+
 
 ## Development server
 
@@ -32,13 +71,6 @@ To build the project run:
 
 ```bash
 ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
 ```bash
 ng test
